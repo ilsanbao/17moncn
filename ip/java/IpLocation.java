@@ -72,22 +72,17 @@ class IpLocation {
         return int2long((((a & 0xff) << 24) | ((b & 0xff) << 16) | ((c & 0xff) << 8) | (d & 0xff)));
     }
     private static int str2Ip(String ip)  {
-        String[] bytes = ip.split("\\.");
+        String[] ss = ip.split("\\.");
         int a, b, c, d;
-        a = stringToInt(bytes[0]);
-        b = stringToInt(bytes[1]);
-        c = stringToInt(bytes[2]);
-        d = stringToInt(bytes[3]);
+        a = Integer.parseInt(ss[0]);
+        b = Integer.parseInt(ss[1]);
+        c = Integer.parseInt(ss[2]);
+        d = Integer.parseInt(ss[3]);
         return (a << 24) | (b << 16) | (c << 8) | d;
     }
 
-    private static int stringToInt(String s) {
-        return Integer.parseInt(s);
-    }
-
     private static long ip2long(String ip)  {
-        int ipNum = str2Ip(ip);
-        return int2long(ipNum);
+        return int2long(str2Ip(ip));
     }
 
     private static long int2long(int i) {
