@@ -41,7 +41,6 @@ class IpLocation {
             //
             }
          }
-        System.out.println("start.");
     }
 
     public String[] find(String ip){
