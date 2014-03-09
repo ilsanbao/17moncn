@@ -5,7 +5,7 @@ package main
 
 import (
 	"fmt"
-	"ip17mon"
+	"./ip17mon"
 	"time"
 )
 

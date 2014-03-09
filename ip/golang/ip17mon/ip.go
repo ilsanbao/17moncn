@@ -47,13 +47,11 @@ func Find(ip string) []byte {
 func parseIpString(ip string) (prefix uint32, num uint32) {
 	var ipArray []string  = strings.Split(ip, ".")
 	ip_part0, _ := strconv.ParseUint(ipArray[0], 10, 32)
-	var ip_max_prefix uint32 = uint32(ip_part0);
 	ip_part1, _ := strconv.ParseUint(ipArray[1], 10, 32)
 	ip_part2, _ := strconv.ParseUint(ipArray[2], 10, 32)
 	ip_part3, _ := strconv.ParseUint(ipArray[3], 10, 32)
-	var ipUint32 uint32 = (ip_max_prefix << 24 + uint32(ip_part1) << 16 + uint32(ip_part2) << 8 + uint32(ip_part3));
-
-	return ip_max_prefix, ipUint32
+    
+	return uint32(ip_part0), (uint32(ip_part0) << 24 + uint32(ip_part1) << 16 + uint32(ip_part2) << 8 + uint32(ip_part3))
 }
 
 func loadDataBytes(filePath string) []byte {
