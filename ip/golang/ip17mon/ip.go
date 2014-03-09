@@ -9,7 +9,7 @@ import (
 	"strconv"
 )
 
-var ipBinaryFilePath string = "/Users/fanrukuan/codesource/17monipdb.dat"
+var ipBinaryFilePath string = "./17monipdb.dat"
 
 var data []byte;
 var offset uint32;
