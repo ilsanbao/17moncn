@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Text;
 
@@ -8,7 +8,7 @@ namespace IpLocation
     {
         readonly string ipBinaryFilePath = "17monipdb.dat";
         readonly byte[] dataBuffer, indexBuffer;
-        readonly int[] index = new int[256];
+        readonly uint[] index = new uint[256];
         readonly int offset;
         public IpLocation()
         {
@@ -28,21 +28,21 @@ namespace IpLocation
 
                 for (int loop = 0; loop < 256; loop++)
                 {
-                    index[loop] = (int)BytesToLong(indexBuffer[loop * 4 + 3], indexBuffer[loop * 4 + 2], indexBuffer[loop * 4 + 1], indexBuffer[loop * 4]);
+                    index[loop] = BytesToLong(indexBuffer[loop * 4 + 3], indexBuffer[loop * 4 + 2], indexBuffer[loop * 4 + 1], indexBuffer[loop * 4]);
                 }
             }
             catch { }
         }
-        private static long BytesToLong(byte a, byte b, byte c, byte d)
+        private static uint BytesToLong(byte a, byte b, byte c, byte d)
         {
-            return (a << 24) | (b << 16) | (c << 8) | d;
+            return ((uint)a << 24) | ((uint)b << 16) | ((uint)c << 8) | (uint)d;
         }
         public string[] Find(string ip)
         {
             var ips = ip.Split('.');
             int ip_prefix_value = int.Parse(ips[0]);
             long ip2long_value = BytesToLong(byte.Parse(ips[0]), byte.Parse(ips[1]), byte.Parse(ips[2]), byte.Parse(ips[3]));
-            int start = index[ip_prefix_value];
+            uint start = index[ip_prefix_value];
             int max_comp_len = offset - 1028;
             long index_offset = -1;
             int index_length = -1;
