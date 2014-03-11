@@ -9,39 +9,50 @@ import (
 	"strconv"
 )
 
-var ipBinaryFilePath string = "./17monipdb.dat"
+var ipBinaryFilePath string = "C:\\Users\\T400\\Desktop\\gocode\\ip17mon/17monipdb.dat"
 
-var data []byte;
-var offset uint32;
-var index []byte;
+var data []byte
+var offset uint32
+var index []byte
+var index2 [256]uint32
+var max_comp_len uint32
 
 func init() {
 	data = loadDataBytes(ipBinaryFilePath)
-	offset = bytesBigEndianToUint32(data[:4]);
-	index = data[4:offset];
+	offset = bytesBigEndianToUint32(data[:4])
+	index = data[4:offset]
+	for i:=0 ; i < 256; i++ {
+		index2[i] = bytesLittleEndianToUint32(index[i*4:i*4+4])
+	}
+	max_comp_len = offset - 1028
 }
 
-func Find(ip string) []byte {
-
+func Find(ip string) string {
 	ip_max_prefix, ipUint32 := parseIpString(ip)
+	
+	var index_offset uint32 = 0
+	var index_length byte = 0
+	var start uint32 = index2[ip_max_prefix] * 8 + 1024
+	if ip_max_prefix < 255 {
+		er_fen := start + uint32((index2[ip_max_prefix+1] * 8 + 1024 - start) / 2)
+		if (bytesBigEndianToUint32(index[er_fen:er_fen+4]) < ipUint32) {
+			start = er_fen			
+		}
+	}
 
-	var tmp_offset uint32 = ip_max_prefix * 4
-	var max_comp_len uint32 = offset - 1028
-	var start uint32 = bytesLittleEndianToUint32(index[tmp_offset:tmp_offset+4])
-	var index_offset uint32 = 0;
-	var index_length byte = 0;
-	for start = start * 8 + 1024; start < max_comp_len; start += 8 {
+	for ; start < max_comp_len; start += 8 {
 		if bytesBigEndianToUint32(index[start:start+4]) >= ipUint32 {
 			index_offset = uint32(index[start+6]) << 16 + uint32(index[start+5]) << 8 + uint32(index[start+4]);
 			index_length = index[start+7]
 			break
 		}
 	}
+
 	if index_length == 0 {
-		return nil
+		return "N/A"
 	}
 
-	return data[offset + index_offset - 1024:offset + index_offset - 1024 + uint32(index_length)]
+	return string(data[offset + index_offset - 1024:offset + index_offset - 1024 + uint32(index_length)])
 }
 
 func parseIpString(ip string) (prefix uint32, num uint32) {
