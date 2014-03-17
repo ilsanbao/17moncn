@@ -1,9 +1,5 @@
 //
 //  IpLocation.m
-//  objcdemos
-//
-//  Created by 范茹宽 on 14-3-16.
-//
 //
 
 #import "IpLocation.h"
@@ -15,7 +11,7 @@
     self = [super init];
     if (self)
     {
-        self.ipBinaryFilePath = @"/Users/fanrukuan/codesource/17monipdb.dat";
+        self.ipBinaryFilePath = @"/pathto/17monipdb.dat";
         NSFileHandle *file = [NSFileHandle fileHandleForReadingAtPath:self.ipBinaryFilePath];
         self.data = [file readDataToEndOfFile];
         
