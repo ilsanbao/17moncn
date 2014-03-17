@@ -1,9 +1,5 @@
 //
 //  IpLocation.h
-//  objcdemos
-//
-//  Created by 范茹宽 on 14-3-16.
-//
 //
 
 #import <Foundation/Foundation.h>
