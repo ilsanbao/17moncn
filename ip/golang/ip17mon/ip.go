@@ -33,13 +33,14 @@ func Find(ip string) string {
 	var index_offset uint32 = 0
 	var index_length byte = 0
 	var start uint32 = index2[ip_max_prefix] * 8 + 1024
+	/*
 	if ip_max_prefix < 255 {
 		er_fen := start + uint32((index2[ip_max_prefix+1] * 8 + 1024 - start) / 2)
 		if (bytesBigEndianToUint32(index[er_fen:er_fen+4]) < ipUint32) {
 			start = er_fen			
 		}
 	}
-
+*/
 	for ; start < max_comp_len; start += 8 {
 		if bytesBigEndianToUint32(index[start:start+4]) >= ipUint32 {
 			index_offset = uint32(index[start+6]) << 16 + uint32(index[start+5]) << 8 + uint32(index[start+4]);
