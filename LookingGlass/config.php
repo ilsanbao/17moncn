@@ -10,8 +10,8 @@ return array(
         'title' => 'LookingGlass', //站点名称
         'domain' => 'lg.17mon.cn',
         'location' => '中国北京',
-        'ipv4' => '118.26.235.98',
-        'ipv6' => '118.26.235.98',
+        'ipv4' => '0.0.0.0',
+        'ipv6' => '0.0.0.0',
         'speedtest' => array(
             '50MB'  => 'http://lg.17mon.cn/50MB.test',
             '150MB' => 'http://lg.17mon.cn/150MB.test',
