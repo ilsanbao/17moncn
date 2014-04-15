@@ -7,6 +7,7 @@ import (
 	"bytes"
 	"strings"
 	"strconv"
+	"net"
 )
 
 var ipBinaryFilePath string = "C:\\Users\\T400\\Desktop\\gocode\\ip17mon/17monipdb.dat"
@@ -59,11 +60,23 @@ func Find(ip string) string {
 func parseIpString(ip string) (prefix uint32, num uint32) {
 	var ipArray []string  = strings.Split(ip, ".")
 	ip_part0, _ := strconv.ParseUint(ipArray[0], 10, 32)
-	ip_part1, _ := strconv.ParseUint(ipArray[1], 10, 32)
-	ip_part2, _ := strconv.ParseUint(ipArray[2], 10, 32)
-	ip_part3, _ := strconv.ParseUint(ipArray[3], 10, 32)
     
-	return uint32(ip_part0), (uint32(ip_part0) << 24 + uint32(ip_part1) << 16 + uint32(ip_part2) << 8 + uint32(ip_part3))
+	return uint32(ip_part0), ip2long(ip)
+
+func ip2long(ipstr string) uint32 {
+        ip := net.ParseIP(ipstr)
+        if ip == nil {
+            return 0
+        }
+        ip = ip.To4()
+        return binary.BigEndian.Uint32(ip)
+}
+
+func long2ip(ipLong uint32) string {
+        ipByte := make([]byte, 4)
+        binary.BigEndian.PutUint32(ipByte, ipLong)
+        ip := net.IP(ipByte)
+        return ip.String()
 }
 
 func loadDataBytes(filePath string) []byte {
