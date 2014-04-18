@@ -4,7 +4,7 @@ class actions
 {
     public static function execute()
     {
-        Header('X-Accel-Buffering: no');// nginx
+        Header('X-Accel-Buffering: no');// nginx-1.5.6 及其以上版本支持
 
         $config = App::getConfig();
 
@@ -17,7 +17,6 @@ class actions
                 'ua' => $_SERVER['HTTP_USER_AGENT']
             ];
             $rateLimitClass = 'ratelimit\\' . $rateLimit['provider']['class'];
-            $option += $rateLimit['provider']['option'];
 
             if (empty($rateLimit['minute']))
             {
@@ -63,7 +62,9 @@ class actions
 
         $response = command\host::execute($args);
         $response = trim($response);
-        exit("<script>parent.update_view('{$response}')</script>");
+        echo "<script>parent.update_view('{$response}')</script>";
+        ob_flush();
+        flush();
     }
 
     protected static function ping($host, $cmd)

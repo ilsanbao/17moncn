@@ -35,26 +35,33 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 当前服务器状态
+                <?php if (!empty($nodes)):?>
                 <select style="float: right" onchange="if(this.value.indexOf('http')>-1){location.href=this.value}">
                     <option value="">其它服务器</option>
                     <?php foreach ($nodes AS $value):?>
                     <option value="<?php App::h($value['link'])?>"><?php App::h($value['name'])?></option>
                     <?php endforeach;?>
                 </select>
+                <?php endif;?>
             </div>
             <div class="panel-body">
                 <dl>
                     <dt>服务位置</dt>
                     <dd><?php App::h($site['location'])?></dd>
                 </dl>
+                <?php if (!empty($site['ipv4'])):?>
                 <dl>
                     <dt>IPv4</dt>
                     <dd><?php App::h($site['ipv4'])?></dd>
                 </dl>
+                <?php endif;?>
+                <?php if (!empty($site['ipv6'])):?>
                 <dl>
                     <dt>IPv6</dt>
-                    <dd><?php App::h($site['ipv4'])?></dd>
+                    <dd><?php App::h($site['ipv6'])?></dd>
                 </dl>
+                <?php endif;?>
+                <?php if (!empty($site['speedtest'])):?>
                 <dl>
                     <dt>下载速度测试</dt>
                     <dd>
@@ -63,6 +70,7 @@
                         <?php endforeach;?>
                     </dd>
                 </dl>
+                <?php endif;?>
                 <dl>
                     <dt>您的IP</dt>
                     <dd><?php App::h(isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '')?></dd>
@@ -85,12 +93,6 @@
                         <option value="<?php App::h($key)?>"><?php App::h($key)?></option>
                         <?php endforeach;?>
                     </select>
-                        <!--
-                        <select id="J_output" name="output" class="form-control">
-                            <option value="console">命令行格式</option>
-                            <option value="html">HTML格式</option>
-                        </select>
-                        -->
                         </div>
                         <div class="form-group">
                     <button type="button" id="J_button" class="btn btn-primary">执行</button> <img id="loading" style="display: none" src="http://s.qdcdn.com/loveapp/dpt/theme/images/spinner.gif">
@@ -210,8 +212,6 @@ $(function(){
 
     window.req_complete = function(){
         $('#loading').hide();
-        $('#J_button').button('执行完毕');
-
     };
 
     window.update_start = function(){
@@ -223,7 +223,6 @@ $(function(){
         $('#html table').hide();
 
         $('#loading').show();
-        $('#J_button').button('正在加载..');
     };
 });
 </script>
