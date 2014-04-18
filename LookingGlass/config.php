@@ -3,9 +3,9 @@
 return array(
     'site' => array(
         'home' => array( //首页
-            'title' => '17mon网络工具集',
-            'logo' => 'http://s.qdcdn.com/loveapp/dpt/theme/images/logo.png',
-            'link'  => 'http://tool.17mon.cn',
+            'name' => '17mon网络工具集', // 必选
+            'logo' => 'http://s.qdcdn.com/loveapp/dpt/theme/images/logo.png', // 可选，不填写则用 name 替代
+            'link'  => 'http://tool.17mon.cn', // 必选
         ),
         'title' => 'LookingGlass', //站点Title名称
         'location' => '中国北京', //站点服务器机房位置
@@ -21,7 +21,7 @@ return array(
             'provider' => array(
                 'class' => 'session',
             ), // 默认使用session记录
-            'minute' => 10, //每分钟 100 次
+            'minute' => 10, // 限速每Ip每分钟请求最多 10 次
         ),
         'commands' => array( // key名称不能修改
             'host' => '/usr/bin/host',
