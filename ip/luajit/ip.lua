@@ -1,5 +1,7 @@
 #!/usr/bin/env luajit
 
+-- 暂时还不可用 --
+
 local bit = require("bit")
 
 require('php')
@@ -13,6 +15,23 @@ function byteToUint32(a,b,c,d)
 	_int = _int + bit.lshift(c, 8)
 	_int = _int + d
 	return _int
+end
+
+function Split(szFullString, szSeparator)
+	local nFindStartIndex = 1
+	local nSplitIndex = 1
+	local nSplitArray = {}
+	while true do
+	   local nFindLastIndex = string.find(szFullString, szSeparator, nFindStartIndex)
+	   if not nFindLastIndex then
+	    nSplitArray[nSplitIndex] = string.sub(szFullString, nFindStartIndex, string.len(szFullString))
+	    break
+	   end
+	   nSplitArray[nSplitIndex] = string.sub(szFullString, nFindStartIndex, nFindLastIndex - 1)
+	   nFindStartIndex = nFindLastIndex + string.len(szSeparator)
+	   nSplitIndex = nSplitIndex + 1
+	end
+	return nSplitArray
 end
 
 local ipBinaryFilePath = "/home/software/17monipdb.dat"
@@ -31,7 +50,7 @@ function IpLocation(ipstr)
 
 	local indexBuffer = file:read(offset_len - 4)
 
-	local tmp_offset = 118 * 4
+	local tmp_offset = 118 * 4 -- 这里是写死的
 
 	local start_len = byteToUint32(string.byte(indexBuffer, tmp_offset + 4), string.byte(indexBuffer, tmp_offset + 3), string.byte(indexBuffer, tmp_offset + 2), string.byte(indexBuffer, tmp_offset + 1))
 
