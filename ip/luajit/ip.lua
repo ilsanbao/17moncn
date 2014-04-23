@@ -1,7 +1,5 @@
 #!/usr/bin/env luajit
 
--- 暂时还不可用 --
-
 local bit = require("bit")
 
 require('php')
