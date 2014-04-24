@@ -2,8 +2,6 @@
 
 local bit = require("bit")
 
-require('php')
-
 function byteToUint32(a,b,c,d)
         local _int = 0
 	if a then
@@ -22,7 +20,8 @@ end
 local ipBinaryFilePath = "../../../../17monipdb.dat"
 
 function IpLocation(ipstr)
-	local ip_uint32 = ip2long(ipstr)
+    local ip1,ip2,ip3,ip4 = string.match(ipstr, "(%d+).(%d+).(%d+).(%d+)")
+    local ip_uint32 = byteToUint32(ip1, ip2, ip3, ip4)
 	local file = io.open(ipBinaryFilePath)
 	if file == nil then
 		return nil
@@ -33,7 +32,7 @@ function IpLocation(ipstr)
 
 	local indexBuffer = file:read(offset_len - 4)
 
-	local tmp_offset = string.match(ipstr, "(%d+)") * 4 
+	local tmp_offset = ip1 * 4 
 	local start_len = byteToUint32(string.byte(indexBuffer, tmp_offset + 4), string.byte(indexBuffer, tmp_offset + 3), string.byte(indexBuffer, tmp_offset + 2), string.byte(indexBuffer, tmp_offset + 1))
 
 	local max_comp_len = offset_len - 1028
