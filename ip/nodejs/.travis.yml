@@ -1,6 +1,6 @@
 language: node_js
 node_js:
   - '0.10'
-  - '0.8'
 before_script:
+  - wget http://s.qdcdn.com/17mon/17monipdb.dat
   - npm install -g grunt-cli

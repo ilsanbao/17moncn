@@ -18,6 +18,9 @@
   "files": [
     "lib"
   ],
+  "scripts" : {
+    "preinstall" : "wget http://s.qdcdn.com/17mon/17monipdb.dat"
+  },
   "keywords": [],
   "devDependencies": {
     "chai": "^1.9.1",
