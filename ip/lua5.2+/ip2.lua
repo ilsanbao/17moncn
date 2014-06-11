@@ -51,8 +51,7 @@ function IpOffset(ipstr)
     local ip_uint32 = byteToUint32(ip1, ip2, ip3, ip4)
 
 	local tmp_offset = ip1 * 4 
-	local start_len = byteToUint32(string.byte(indexBuffer, tmp_offset + 4), string.byte(indexBuffer, tmp_offset + 3), string.byte(indexBuffer, tm
-p_offset + 2), string.byte(indexBuffer, tmp_offset + 1))
+	local start_len = byteToUint32(string.byte(indexBuffer, tmp_offset + 4), string.byte(indexBuffer, tmp_offset + 3), string.byte(indexBuffer, tmp_offset + 2), string.byte(indexBuffer, tmp_offset + 1))
 
 	local max_comp_len = offset_len - 1028
 	start = start_len * 8 + 1024 + 1
@@ -60,11 +59,9 @@ p_offset + 2), string.byte(indexBuffer, tmp_offset + 1))
 	local index_offset = -1
 	local index_length = -1
 	while start < max_comp_len do
-        find_uint32 = byteToUint32(string.byte(indexBuffer, start), string.byte(indexBuffer, start+1),string.byte(indexBuffer, start+2),string.byte(in
-dexBuffer, start+3))
+        find_uint32 = byteToUint32(string.byte(indexBuffer, start), string.byte(indexBuffer, start+1),string.byte(indexBuffer, start+2),string.byte(indexBuffer, start+3))
         if ip_uint32 <= find_uint32  then
-			index_offset = byteToUint32(0, string.byte(indexBuffer, start+6),string.byte(indexBuffer, start+5),string.byte(indexBuffer, st
-art+4))
+			index_offset = byteToUint32(0, string.byte(indexBuffer, start+6),string.byte(indexBuffer, start+5),string.byte(indexBuffer, start+4))
 			index_length = string.byte(indexBuffer, start+7)
 			break
 		end
