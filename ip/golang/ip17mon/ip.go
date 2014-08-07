@@ -34,14 +34,7 @@ func Find(ip string) string {
 	var index_offset uint32 = 0
 	var index_length byte = 0
 	var start uint32 = index2[ip_max_prefix] * 8 + 1024
-	/*
-	if ip_max_prefix < 255 {
-		er_fen := start + uint32((index2[ip_max_prefix+1] * 8 + 1024 - start) / 2)
-		if (bytesBigEndianToUint32(index[er_fen:er_fen+4]) < ipUint32) {
-			start = er_fen			
-		}
-	}
-*/
+
 	for ; start < max_comp_len; start += 8 {
 		if bytesBigEndianToUint32(index[start:start+4]) >= ipUint32 {
 			index_offset = uint32(index[start+6]) << 16 + uint32(index[start+5]) << 8 + uint32(index[start+4]);
@@ -63,20 +56,17 @@ func parseIpString(ip string) (prefix uint32, num uint32) {
     
 	return uint32(ip_part0), ip2long(ip)
 
-func ip2long(ipstr string) uint32 {
-        ip := net.ParseIP(ipstr)
-        if ip == nil {
-            return 0
-        }
-        ip = ip.To4()
-        return binary.BigEndian.Uint32(ip)
+}
+
+func ip2long(str string) (ip uint32) {
+	return binary.BigEndian.Uint32([]byte(net.ParseIP(str).To4()))
 }
 
 func long2ip(ipLong uint32) string {
-        ipByte := make([]byte, 4)
-        binary.BigEndian.PutUint32(ipByte, ipLong)
-        ip := net.IP(ipByte)
-        return ip.String()
+	ipByte := make([]byte, 4)
+	binary.BigEndian.PutUint32(ipByte, ipLong)
+
+	return net.IP(ipByte).String()
 }
 
 func loadDataBytes(filePath string) []byte {
