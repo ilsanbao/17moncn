@@ -43,7 +43,24 @@ class IpLocation {
          }
     }
 
-    public String[] find(String ip){
+    public static IpLocation ip = new IpLocation();
+
+    public static void main(String[] args){
+
+        for (int i = 0; i < 100; i++)
+        {
+            new Thread(){
+                public void run(){
+                    System.out.println(ip.find("118.28.8.8")[0] + ' ' + ip.find("118.28.8.8")[1]);
+                }
+            }.start();
+        }
+    }
+
+    /**
+     * 确保线程安全
+     */
+    public synchronized String[] find(String ip){
         int ip_prefix_value = new Integer(ip.substring(0, ip.indexOf(".")));
         long ip2long_value  = ip2long(ip);
         int start = index[ip_prefix_value];
