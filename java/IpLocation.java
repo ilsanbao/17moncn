@@ -51,7 +51,7 @@ class IpLocation {
         {
             new Thread(){
                 public void run(){
-                    System.out.println(ip.find("118.28.8.8")[0] + ' ' + ip.find("118.28.8.8")[1]);
+                    System.out.println(java.util.Arrays.toString(ip.find("118.28.8.8")));
                 }
             }.start();
         }
