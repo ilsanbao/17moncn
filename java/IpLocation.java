@@ -60,7 +60,7 @@ class IpLocation {
     /**
      * 确保线程安全
      */
-    public synchronized String[] find(String ip){
+    public String[] find(String ip){
         int ip_prefix_value = new Integer(ip.substring(0, ip.indexOf(".")));
         long ip2long_value  = ip2long(ip);
         int start = index[ip_prefix_value];
@@ -78,10 +78,12 @@ class IpLocation {
             }
         }
 
-        dataBuffer.position(offset + (int)index_offset - 1024);
-        byte[] areaBytes = new byte[index_length];
-        dataBuffer.get(areaBytes, 0, index_length);
-
+		byte[] areaBytes;
+		synchronized (dataBuffer) {
+			dataBuffer.position(offset + (int) index_offset - 1024);
+			areaBytes = new byte[index_length];
+			dataBuffer.get(areaBytes, 0, index_length);
+		}
         return new String(areaBytes).split("\t");
     }
 
