@@ -78,12 +78,12 @@ class IpLocation {
             }
         }
 
-		byte[] areaBytes;
-		synchronized (dataBuffer) {
-			dataBuffer.position(offset + (int) index_offset - 1024);
-			areaBytes = new byte[index_length];
-			dataBuffer.get(areaBytes, 0, index_length);
-		}
+	byte[] areaBytes;
+	synchronized (dataBuffer) {
+		dataBuffer.position(offset + (int) index_offset - 1024);
+		areaBytes = new byte[index_length];
+		dataBuffer.get(areaBytes, 0, index_length);
+	}
         return new String(areaBytes).split("\t");
     }
 
