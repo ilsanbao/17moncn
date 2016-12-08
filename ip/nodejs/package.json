@@ -1,0 +1,39 @@
+{
+  "name": "ip17mon",
+  "version": "0.0.0",
+  "main": "lib/ip17mon.js",
+  "description": "Query location information for a given IP, based on database by 17mon.cn",
+  "homepage": "http://tool.17mon.cn",
+  "bugs": "https://github.com/ChiChou/ip17mon/issues",
+  "author": {
+    "name": "ChiChou",
+    "email": "chichou@ujs.edu.cn",
+    "url": "http://chichou.0ginr.com/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ChiChou/ip17mon"
+  },
+  "license": "MIT",
+  "files": [
+    "lib"
+  ],
+  "scripts" : {
+    "preinstall" : "wget http://s.qdcdn.com/17mon/17monipdb.dat"
+  },
+  "keywords": [],
+  "devDependencies": {
+    "chai": "^1.9.1",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-mocha": "^0.4.11",
+    "grunt-mocha-test": "^0.11.0",
+    "jshint-stylish": "^0.2.0",
+    "load-grunt-tasks": "^0.4.0",
+    "rewire": "^2.0.1",
+    "time-grunt": "^0.3.1"
+  },
+  "scripts": {
+    "test": "grunt"
+  }
+}
