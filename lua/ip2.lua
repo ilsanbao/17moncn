@@ -41,6 +41,7 @@ function loadAreaList()
             file:seek("set", offset_len - 1024 + index_offset)
             areaList[index_offset] = file:read(index_length)
     end
+    file:close()
 end
 
 loadAreaList()
